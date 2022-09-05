@@ -1,8 +1,20 @@
 const express=require('express')
 const Rout=express.Router()
 const hotelController=require('../controller/hotel')
+const authController=require('../controller/auth')
 
-Rout.route('/').post(hotelController.addHotel).get(hotelController.getAllHotel)
-Rout.route('/:id').put(hotelController.updateHotel).delete(hotelController.deleteHotel).get(hotelController.getOneHotel)
+Rout.route('/').post(authController.protect,authController.role(['admin']), hotelController.addHotel).get(hotelController.getAllHotel)
+Rout.route("/:id")
+  .put(
+    authController.protect,
+    authController.role(["admin"]),
+    hotelController.updateHotel
+  )
+  .delete(
+    authController.protect,
+    authController.role(["admin"]),
+    hotelController.deleteHotel
+  )
+  .get(hotelController.getOneHotel);
 
 module.exports=Rout

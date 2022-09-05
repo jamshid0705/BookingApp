@@ -5,11 +5,13 @@ const appError=require('../utility/appError')
 const hotelRout=require('../routes/hotels')
 const authRout=require('../routes/auth')
 const userRout=require('../routes/users')
+const roomRout=require('../routes/rooms')
 const cookieparser=require('cookie-parser')
 
 app.use(express.json());
 app.use(cookieparser())
 
+app.use('/api/rooms',roomRout)
 app.use('/api/users',userRout)
 app.use('/api/auth',authRout)
 app.use('/api/hotels',hotelRout)
