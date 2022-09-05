@@ -7,7 +7,9 @@ const authRout=require('../routes/auth')
 const userRout=require('../routes/users')
 const roomRout=require('../routes/rooms')
 const cookieparser=require('cookie-parser')
+const cors=require('cors')
 
+app.use(cors())
 app.use(express.json());
 app.use(cookieparser())
 
