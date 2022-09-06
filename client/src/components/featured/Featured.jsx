@@ -6,7 +6,7 @@ const Featured = () => {
     "/hotels/countbycity?city=tashkent,bekobod,yunusobod"
   );
 
-  console.log(data.data);
+  console.log("featured dataaaaaaaaa", data);
   return (
     <div className="featured">
       {loading ? (
@@ -21,7 +21,7 @@ const Featured = () => {
             />
             <div className="featuredTitles">
               <h1>Tashkent</h1>
-              <h2>{data.data[0]} properties</h2>
+              <h2>{data.map((val) => val[0])} properties</h2>
             </div>
           </div>
 
@@ -33,7 +33,7 @@ const Featured = () => {
             />
             <div className="featuredTitles">
               <h1>Bekobod</h1>
-              <h2>{data.data[1]} properties</h2>
+              <h2>{data.map((val)=>val[1])} properties</h2>
             </div>
           </div>
           <div className="featuredItem">
@@ -44,7 +44,7 @@ const Featured = () => {
             />
             <div className="featuredTitles">
               <h1>Yunusobod</h1>
-              <h2>{data.data[2]} properties</h2>
+              <h2>{data.map((val)=>val[2])} properties</h2>
             </div>
           </div>
         </>

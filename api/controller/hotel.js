@@ -35,7 +35,10 @@ const getOneHotel = catchError(async (req, res) => {
 });
 //// get all
 const getAllHotel = catchError(async (req, res) => {
-  const hotel = await Hotel.find();
+  const {min,max,...others}=req.query
+  const hotel = await Hotel.find({...others}).limit(
+    req.query.limit
+  )
   res.status(200).json({
     status: "success",
     data: hotel,
@@ -49,10 +52,9 @@ const citybyCount = catchError(async (req, res) => {
       return Hotel.countDocuments({ city: cities }); // sanaydi
     })
   );
-  res.status(200).json({
-    status: "success",
-    data: list,
-  });
+  res.status(200).json([
+    list
+  ]);
 });
 
 //// get all
@@ -62,14 +64,13 @@ const citybytype = catchError(async (req, res) => {
   const resortCount = await Hotel.countDocuments({ type: "resort" });
   const villaCount = await Hotel.countDocuments({ type: "villa" });
   const cabinCount = await Hotel.countDocuments({ type: "cabin" });
-  res.status(200).json({
-    status: "success",
-    hotel:hotelCount,
-    apartment:apartmentCount,
-    resort:resortCount,
-    villa:villaCount,
-    cabin:cabinCount
-  });
+  res.status(200).json([
+    { type: "hotels", count: hotelCount },
+    { type: "apartments", count: apartmentCount },
+    { type: "resorts", count: resortCount },
+    { type: "villas", count: villaCount },
+    { type: "cabins", count: cabinCount },
+  ]);
 });
 module.exports = {
   citybytype,
