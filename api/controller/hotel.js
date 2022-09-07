@@ -28,21 +28,16 @@ const deleteHotel = catchError(async (req, res) => {
 //// get one
 const getOneHotel = catchError(async (req, res) => {
   const hotel = await Hotel.findById(req.params.id);
-  res.status(200).json({
-    status: "success",
-    data: hotel,
-  });
+  res.status(200).json(hotel);
 });
 //// get all
 const getAllHotel = catchError(async (req, res) => {
   const {min,max,...others}=req.query
-  const hotel = await Hotel.find({...others}).limit(
-    req.query.limit
-  )
-  res.status(200).json({
-    status: "success",
-    data: hotel,
-  });
+  const hotel = await Hotel.find({
+    ...others,
+    cheapestPrice: { $gte: min || 0, $lte: max || 999 },
+  }).limit(req.query.limit);
+  res.status(200).json(hotel);
 });
 //// get all
 const citybyCount = catchError(async (req, res) => {
